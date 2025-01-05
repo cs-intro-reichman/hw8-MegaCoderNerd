@@ -34,7 +34,7 @@ public class Network {
         // we go over all users
         for (int i = 0; i < userCount; i++){
             // we search for the user and return it if found
-            if (users[i].getName() == name) return users[i];
+            if (users[i].getName().toLowerCase() == name.toLowerCase()) return users[i];
         }
         // not found
         return null;
@@ -108,7 +108,7 @@ public class Network {
      *  The user who appears the most in the follow lists of all the users. */
     public String mostPopularUser() {
         int mostAppearences = 0;
-        String mostPopularUser = "";
+        String mostPopularUser = null;
         // if no users are in the network we have no reason to check
         if (userCount == 0) return "";
         // if only one user is in the network he is the most popular by default
@@ -141,7 +141,7 @@ public class Network {
     public String toString() {
        // we go over the network adding each user's description to the
         // textual description of the network
-        String strToPrint = "";
+        String strToPrint = "Network: \n";
         for (int i = 0; i < userCount; i++){
             strToPrint += users[i].toString() + "\n";
         }

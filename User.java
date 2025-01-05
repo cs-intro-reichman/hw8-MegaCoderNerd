@@ -45,7 +45,7 @@
     public boolean follows(String name) {
         // we just iterate over the array and check if the name is inside
         for(int i = 0; i < fCount; i++) {
-            if(follows[i].equals(name)) {
+            if(follows[i].toLowerCase().equals(name.toLowerCase())) {
                 return true;
             }
         }
@@ -57,7 +57,7 @@
         // we first check the capacity hasn't been reached
         // then we check the name isn't already in the array and only then do 
         // we add the followee
-        if (fCount < maxfCount && !follows(name)) {
+        if (fCount < maxfCount && !follows(name.toLowerCase())) {
             follows[fCount] = name;
             fCount++;
             return true;
