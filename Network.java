@@ -31,10 +31,11 @@ public class Network {
     public User getUser(String name) {
         // if users is empty no user exists with any name
         if (userCount == 0) return null;
+        if (name == null) return null;
         // we go over all users
         for (int i = 0; i < userCount; i++){
             // we search for the user and return it if found
-            if (users[i].getName().toLowerCase() == name.toLowerCase()) return users[i];
+            if (users[i].getName().toLowerCase().equals(name.toLowerCase())) return users[i];
         }
         // not found
         return null;
@@ -67,9 +68,9 @@ public class Network {
         User user2 = this.getUser(name2);
         // one of the users is not found in the network
         if (user1 == null || user2 == null) return false;
-        // if user1 already follows user2 we don't need to do anything
-        if (user1.follows(name2)) { 
-            return true;
+        // if user1 already follows user2 or if user1 is user2 we cannot add the followee
+        if (user1.follows(name2) || user1 == user2) { 
+            return false;
         } else {
             // tries to make user1 follow user2 if successful will return true
             boolean hasWorked = user1.addFollowee(name2);
@@ -110,7 +111,7 @@ public class Network {
         int mostAppearences = 0;
         String mostPopularUser = null;
         // if no users are in the network we have no reason to check
-        if (userCount == 0) return "";
+        if (userCount == 0) return mostPopularUser;
         // if only one user is in the network he is the most popular by default
         if (userCount == 1) return users[0].getName();
         for (int i = 0; i < userCount; i++){
@@ -141,9 +142,9 @@ public class Network {
     public String toString() {
        // we go over the network adding each user's description to the
         // textual description of the network
-        String strToPrint = "Network: \n";
+        String strToPrint = "Network:";
         for (int i = 0; i < userCount; i++){
-            strToPrint += users[i].toString() + "\n";
+            strToPrint += "\n" +users[i].toString();
         }
         
         return strToPrint;
