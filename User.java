@@ -43,34 +43,71 @@
 
     /** If this user follows the given name, returns true; otherwise returns false. */
     public boolean follows(String name) {
-        //// Replace the following statement with your code
+        // we just iterate over the array and check if the name is inside
+        for(int i = 0; i < fCount; i++) {
+            if(follows[i].equals(name)) {
+                return true;
+            }
+        }
         return false;
     }
     /** Makes this user follow the given name. If successful, returns true. 
      *  If this user already follows the given name, or if the follows list is full, does nothing and returns false; */
     public boolean addFollowee(String name) {
-        //// Replace the following statement with your code
+        // we first check the capacity hasn't been reached
+        // then we check the name isn't already in the array and only then do 
+        // we add the followee
+        if (fCount < maxfCount && !follows(name)) {
+            follows[fCount] = name;
+            fCount++;
+            return true;
+        }
         return false;
     }
 
     /** Removes the given name from the follows list of this user. If successful, returns true.
      *  If the name is not in the list, does nothing and returns false. */
     public boolean removeFollowee(String name) {
-        //// Replace the following statement with your code
-        return false;
+        // The cases in which the function yields nothing
+        if (fCount == 0) return false;
+        if (!this.follows(name)) return false;
+        // an array of the size of the follows array-1 as we remove one value from it
+        String[] tempFollows = new String[fCount];
+        int index = 0;
+        
+        for (int i = 0; i < fCount; i++){
+            if (follows[i] != name) {
+                tempFollows[index] = follows[i];
+                index++;
+            } 
+        }
+        // we decrement fCount as we removed a followee
+        fCount--;
+        // we didn't include the value we wanted to remove in the new array
+        // thus we just set the follows array to be the one without the name
+        follows = tempFollows;
+        return true;
     }
 
     /** Counts the number of users that both this user and the other user follow.
     /*  Notice: This is the size of the intersection of the two follows lists. */
     public int countMutual(User other) {
-         //// Replace the following statement with your code
-        return 0;
+        int countM = 0;
+        // we go over this User's followees and increment the counter
+        // every time we find a new follower that is in common using the follows
+        // method of the other user
+        for (int i = 0; i < fCount; i++){
+            if (other.follows(follows[i])) countM++;
+        }
+        return countM;
     }
 
     /** Checks is this user is a friend of the other user.
      *  (if two users follow each other, they are said to be "friends.") */
     public boolean isFriendOf(User other) {
-        //// Replace the following statement with your code
+        // we just use the follows method for the name of the other user
+        // and also this user 
+        if (this.follows(other.name) && other.follows(name)) return true;
         return false;
     }
     /** Returns this user's name, and the names that s/he follows. */
